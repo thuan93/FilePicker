@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FilePicker.MainPage"
+             x:Name="this">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+            <Label
+                Text="{Binding User.Name, Source={x:Reference this}}"
+                Style="{StaticResource Headline}" />
+
+            <Label
+                Text="{Binding User.Age, Source={x:Reference this}}" />
+            <Label
+                Text="{Binding User.Cars.Car1, Source={x:Reference this}}" />
+            <Label
+                Text="{Binding User.Cars.Car2, Source={x:Reference this}}" />
+            <Label
+                Text="{Binding User.Cars.Car3, Source={x:Reference this}}" />
+            <Button
+                x:Name="CounterBtn"
+                Text="Click me"
+                Clicked="OnCounterClicked"
+                HorizontalOptions="Fill" />
+            <Button
+                Text="Click me1"
+                Clicked="Button_Clicked"
+                HorizontalOptions="Fill" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
