@@ -1,7 +1,4 @@
-﻿using Microsoft.Maui.Controls.PlatformConfiguration;
-using Microsoft.Maui.Storage;
-using Newtonsoft.Json;
-using Windows.Storage;
+﻿using Newtonsoft.Json;
 
 namespace FilePicker;
 
@@ -24,11 +21,11 @@ public partial class MainPage : ContentPage
             var customFileType = new FilePickerFileType(
                  new Dictionary<DevicePlatform, IEnumerable<string>>
                  {
-                    { DevicePlatform.iOS, new[] { "public.my.comic.extension" } }, // UTType values
+                    { DevicePlatform.iOS, new[] { "public.json" } }, // UTType values
                     { DevicePlatform.Android, new[] { "application/json" } }, // MIME type
                     { DevicePlatform.WinUI, new[] { ".json" } }, // file extension
                     { DevicePlatform.Tizen, new[] { "*/*" } },
-                    { DevicePlatform.macOS, new[] { "cbr", "cbz" } }, // UTType values
+                    { DevicePlatform.macOS, new[] { "public.json" } }, // UTType values
                  });
 
             PickOptions options = new()
@@ -84,6 +81,12 @@ public partial class MainPage : ContentPage
         var downloadsFolder = await StorageLibrary.GetLibraryAsync(KnownLibraryId.Documents);
         var downloadsPath = downloadsFolder.SaveFolder.Path;
         var filePath = Path.Combine(downloadsPath, "file.json");
+        using var writer = new StreamWriter(filePath, false);
+        var user = JsonConvert.SerializeObject(User);
+        await writer.WriteAsync(user);
+#elif IOS
+        var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        var filePath = Path.Combine(documentsPath, "user.json");
         using var writer = new StreamWriter(filePath, false);
         var user = JsonConvert.SerializeObject(User);
         await writer.WriteAsync(user);
